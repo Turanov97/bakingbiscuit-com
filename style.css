@@ -1,0 +1,472 @@
+/*
+Theme Name: TheGem Elementor Child
+Description: Multi-Purpose Wordpress Theme
+Author: Codex Themes.
+Theme URI: http://codex-themes.com/thegem/
+Author URI: http://codex-themes.com/thegem/
+Template: thegem-elementor
+Version: 1.0
+Tags: one-column, two-columns, left-sidebar, right-sidebar, responsive-layout, custom-background, custom-colors, custom-header, custom-menu, featured-images, flexible-header, full-width-template, theme-options, translation-ready, dark, light
+License: GNU General Public License
+License URI: license.txt
+Domain: theGem-elementor-child
+*/
+
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;1,600&display=swap');
+
+.checkout-login form {
+    background-color: var(--sections-background-color, #fff);
+    padding: var(--sections-padding, 16px 30px);
+    border-left: var(--sections-border-left-width, 1px) var(--sections-border-type, solid) var(--sections-border-color, #d5d8dc);
+    border-bottom: var(--sections-border-bottom-width, 1px) var(--sections-border-type, solid) var(--sections-border-color, #d5d8dc);
+    border-right: var(--sections-border-right-width, 1px) var(--sections-border-type, solid) var(--sections-border-color, #d5d8dc);
+    border-top: var(--sections-border-top-width, 1px) var(--sections-border-type, solid) var(--sections-border-color, #d5d8dc);
+    border-radius: var(--sections-border-radius, 3px);
+    font-size: 14px;
+    border: none;
+}
+
+
+.checkout-login form input {
+    color: var(--forms-fields-normal-color, #69727d);
+    background: #f9fafa;
+    border: none;
+    font-size: 14px;
+    width: 100%;
+    padding: 8px 16px;
+
+    display: inline-block;
+    position: relative;
+    margin: 0;
+}
+
+.checkout-login form label {
+    color: #555;
+    font-family: 'Montserrat';
+    font-weight: 600;
+}
+
+
+.checkout-login form p {
+    margin-bottom: 6px;
+}
+
+.checkout-login form h2 {
+    margin-top: 45px;
+    margin-bottom: 10px;
+}
+
+
+.elementor-element-72167ec .elementor-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+
+.elementor-element-72167ec .elementor-column.elementor-col-50 {
+    width: 100% !important;
+}
+
+.checkout-login form .login-form-btn, .checkout-login .woocommerce-Button.button {
+    margin-top: 15px;
+    margin-right: 27px;
+    border-color: #EA6707FF;
+    color: #333333;
+    background: transparent;
+    border-width: 2px;
+    line-height: 36px;
+    border-style: solid;
+    text-transform: uppercase;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+
+    height: 40px;
+    padding: 0 17px;
+    font-size: 14px;
+    width: max-content;
+
+    font-style: normal;
+    font-weight: 700;
+
+    font-family: 'Montserrat';
+    -webkit-transition: .2s linear;
+    -moz-transition: .2s linear;
+    -ms-transition: .2s linear;
+    -o-transition: .2s linear;
+    transition: .2s linear;
+}
+
+.checkout-login form .login-form-btn:hover, .checkout-login .woocommerce-Button.button:hover {
+    background-color: #EA6707FF;
+    color: #fff;
+}
+
+
+.checkout-login form .checkout-login-remember .checkbox-sign {
+    width: 24px;
+    height: 24px;
+    margin-right: 12px;
+    border-width: 1px;
+    vertical-align: middle;
+    border-radius: 3px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    user-select: none;
+}
+
+.checkout-login h2 span {
+    font-family: 'Montserrat' !important;
+}
+
+.checkout-login .register_title:before {
+    content: '\e667' !important;
+}
+
+.woocommerce-LostPassword.lost_password {
+    padding-top: 13px;
+    margin-left: 40px;
+    position: relative;
+}
+
+.checkout-login .woocommerce-LostPassword.lost_password a {
+    padding-top: 12px;
+    font-family: 'Montserrat' !important;
+}
+
+
+.stm_lost_password {
+    display: flex;
+    align-items: center;
+}
+
+
+.checkout-login .woocommerce-LostPassword.lost_password:before {
+    content: '';
+    display: block;
+    background-color: #dfe5e8;
+    width: 1px;
+    height: 30px;
+    font-size: 0;
+    position: absolute;
+    left: -20px;
+    top: 10px;
+}
+
+
+.checkout-login .woocommerce-form__input-checkbox {
+    width: max-content;
+}
+
+
+.checkout-login .woocommerce-form__input-checkbox.input-checkbox {
+    top: 2px;
+}
+
+.checkout-login .woocommerce-gzd-reg_data_privacy-checkbox-text {
+    font-size: 12px;
+    font-family: 'Montserrat' !important;
+    font-weight: 700;
+    color: #555;
+}
+
+
+.stm_email_address {
+    margin-top: 15px;
+}
+
+.elementor-19086 .elementor-element.elementor-element-a228f1c .elementor-heading-title {
+    font-family: 'Montserrat' !important;
+}
+
+.stm_company_item {
+    display: flex;
+
+    border-top: 1px solid #000;
+    padding: 5px 0;
+}
+
+.stm_company_item a {
+    display: flex;
+    align-items: center;
+    color: #000;
+    font-weight: 600;
+    font-family: 'Montserrat' !important;
+}
+
+.stm_company_item:last-child {
+    border-bottom: 1px solid #000;
+}
+
+.stm_company_item img {
+    width: 75px;
+    margin-right: 30px;
+}
+
+.stm_companys {
+    display: grid;
+    grid-template-columns: 0.5fr;
+}
+
+.stm_search {
+    display: grid;
+    grid-template-columns: 1fr;
+    margin: 30px 0px;
+}
+
+#stm_search_form {
+    width: 100%;
+    display: flex;
+    gap: 30px;
+}
+
+#stm_search_form input {
+    width: 100%;
+    border: 1px solid #ccc;
+    height: 50px;
+    font-size: larger;
+    border-radius: 3px;
+}
+
+/*preloder*/
+
+.lds-facebook.active {
+    display: inline-block;
+
+}
+
+
+.lds-facebook {
+    display: none;
+    position: relative;
+    width: 80px;
+    height: 80px;
+}
+
+.lds-facebook div {
+    display: inline-block;
+    position: absolute;
+    left: 8px;
+    width: 16px;
+    background: #f17d02;
+    animation: lds-facebook 1.2s cubic-bezier(0, 0.5, 0.5, 1) infinite;
+}
+
+.lds-facebook div:nth-child(1) {
+    left: 8px;
+    animation-delay: -0.24s;
+}
+
+.lds-facebook div:nth-child(2) {
+    left: 32px;
+    animation-delay: -0.12s;
+}
+
+.lds-facebook div:nth-child(3) {
+    left: 56px;
+    animation-delay: 0;
+}
+
+@keyframes lds-facebook {
+    0% {
+        top: 8px;
+        height: 64px;
+    }
+    50%, 100% {
+        top: 24px;
+        height: 32px;
+    }
+}
+
+/*end preloder*/
+
+.stm_single_company {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+}
+
+.stm_single_company_bio, .stm_content .logo {
+    margin-left: 30px;
+}
+
+.stm_content {
+    margin-top: 60px;
+    font-family: 'Montserrat' !important;
+    margin-bottom: 40px;
+}
+
+.stm_content .logo img {
+    width: 190px;
+    height: auto;
+}
+
+.stm_single_title {
+    font-weight: 700;
+}
+
+.stm_content .logo {
+    margin-bottom: 30px;
+}
+
+.stm_single_street, .stm_single_postal_code, .stm_single_phone, .stm_single_email, .stm_single_url {
+    font-weight: 600;
+    font-size: 15px;
+}
+
+.stm_single_phone, .stm_single_email, .stm_single_url {
+    margin-bottom: 8px;
+}
+
+.stm_single_postal_code {
+    margin-bottom: 20px;
+}
+
+.stm_single_company_posts_item {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+.stm_single_company_posts_logo img{
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.stm_single_company_posts_logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.stm_single_company_posts_title {
+    font-weight: 600;
+    color: #f5821f;
+}
+
+.stm_single_company_posts_author {
+    font-size: 14px;
+    font-weight: 600;
+    color: #a5a5a5;
+}
+
+.stm_single_company_posts_desc {
+    color: #000;
+    font-weight: 600;
+}
+
+.welcome_stm_user {
+    font-family: "Montserrat", Sans-serif;
+    font-size: 24px;
+    width: 51%;
+    line-height: 1.4;
+    margin-top: 0;
+}
+
+.stm_user-logged-in .elementor-element-74f6242, .stm_user-logged-in .elementor-element-72167ec  {
+    display: none;
+}
+
+#stm_search_form{
+    position: relative;
+}
+
+#baking_input_search{
+    margin: 0;
+    color: #fff;
+    right: 0;
+    width: max-content !important;
+    border: 2px solid #f27e03 !important;
+    background: #f27e03;
+
+    line-height: 50px;
+    padding: 0 25px;
+    height: 50px !important;
+    font-size: 19px;
+    border-radius: 3px;
+    font-weight: 700;
+    font-family: "Montserrat", Sans-serif;
+    text-transform: uppercase;
+}
+
+
+/**/
+/* Pagination links */
+.pagination a {
+    color: black;
+    float: left;
+    padding: 8px 16px;
+    text-decoration: none;
+    transition: background-color .3s;
+}
+
+/* Style the active/current link */
+.pagination a.active {
+    background-color: dodgerblue;
+    color: white;
+}
+
+/* Add a grey background color on mouse-over */
+.pagination a:hover:not(.active) {background-color: #ddd;}
+
+@media (max-width: 1024px) {
+    .stm_lost_password {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .checkout-login .lost_password {
+        margin-left: 0;
+    }
+
+    .checkout-login .woocommerce-LostPassword.lost_password:before {
+        display: none;
+    }
+}
+
+@media (max-width: 768px) {
+    .elementor-element-72167ec .elementor-row {
+        display: grid;
+        grid-template-columns: 1fr;
+    }
+
+    .stm_single_company {
+        display: grid;
+        grid-template-columns: 1fr ;
+        gap: 20px;
+    }
+
+    .stm_single_company_posts_item {
+        margin: 10px 20px 30px;
+    }
+
+    .stm_companys {
+        grid-template-columns: 1fr;
+    }
+
+    .stm_search {
+        grid-template-columns: 0.7fr;
+    }
+}
+
+@media (max-width: 500px) {
+    .welcome_stm_user {
+        width: 100%;
+    }
+    .stm_search {
+        grid-template-columns: 1fr;
+    }
+    .checkout-login form {
+        padding: 0;
+    }
+
+    .checkout-login form h2 {
+        margin-top: 0px;
+    }
+
+    .stm_single_company_posts_item {
+        flex-direction: column;
+        border-bottom: 1px solid;
+    }
+}
