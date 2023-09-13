@@ -92,6 +92,7 @@ function custom_search_action_callback()
 
 	$args = array(
 		'post_type' => 'company',
+		'posts_per_page' => 15,
 		'tax_query' => array(
 			array(
 				'taxonomy' => 'equipment',
@@ -100,14 +101,20 @@ function custom_search_action_callback()
 				'operator' => 'IN',
 			),
 		),
+		'order' => 'ASC',
+		'orderby' => 'title'
 	);
 
 	$loop = new WP_Query($args);
 	$alphabet = array();
+	$count_post = 0;
+
+
 
 	if ($loop->have_posts()) :
 		while ( $loop->have_posts() ) : $loop->the_post();
 			$alphabet[] = substr(get_the_title(), 0, 1);
+			$count_post++;
 		endwhile;
 	endif;
 
@@ -153,7 +160,7 @@ function custom_search_action_callback()
 
 	$html = ob_get_clean();
 
-	wp_send_json( array('html' => $html, 'letters' => $alphabet) );
+	wp_send_json( array('html' => $html, 'letters' => $alphabet, 'count_post' => $count_post) );
 
 	die($out);
 }
@@ -202,8 +209,6 @@ add_filter('manage_company_posts_columns', 'custom_columns_head');
 // Выводим данные в созданных колонках
 function custom_columns_content($column_name, $post_id)
 {
-
-
 	if ($column_name == 'featured_image') {
 		// Выводим изображение "Featured Image" в колонке
 		echo get_the_post_thumbnail($post_id, array(50, 50)); // Меняйте размеры изображения по вашему выбору
@@ -221,8 +226,14 @@ function custom_columns_content($column_name, $post_id)
 				$term_names[] = $term->name;
 			}
 
-			// Выводим их через запятую
-			echo implode(', ', $term_names);
+			// Объединяем их через запятую
+			$term_string = implode(', ', $term_names);
+
+			// Ограничиваем вывод до 60 слов и добавляем многоточие, если текст длиннее
+			$word_limit = 35;
+			$term_string = wp_trim_words($term_string, $word_limit, '...');
+
+			echo $term_string;
 		} else {
 			echo 'No Equipment';
 		}
@@ -256,7 +267,7 @@ if (!function_exists('write_log_s')) {
 function more_post_ajax()
 {
 	$postId = (isset($_POST["postid"])) ? $_POST["postid"] : '';
-	$ppp = (isset($_POST["ppp"])) ? $_POST["ppp"] : 5;
+	$ppp = (isset($_POST["ppp"])) ? $_POST["ppp"] : 15;
 	$page = (isset($_POST['pageNumber'])) ? $_POST['pageNumber'] : 0;
 	$companyPosts = get_post_meta($postId, 'add_post_in_company', true);
 
@@ -320,3 +331,88 @@ function more_post_ajax()
 
 add_action('wp_ajax_nopriv_more_post_ajax', 'more_post_ajax');
 add_action('wp_ajax_more_post_ajax', 'more_post_ajax');
+
+
+
+
+function more_company_posts()
+{
+	$stm_search = sanitize_text_field($_POST['stm_search']); // Санитизация входных данных
+	global $wpdb;
+	$term_ids = $wpdb->get_col(
+		$wpdb->prepare(
+			"SELECT t.term_id FROM {$wpdb->terms} AS t WHERE t.name LIKE %s",
+			'%' . $wpdb->esc_like($stm_search) . '%'
+		)
+	);
+	if ( empty( $term_ids ) ) {
+		die( 'No results found.' );
+	}
+
+	$ppp = (isset($_POST["ppp"])) ? $_POST["ppp"] : 15;
+	$page = (isset($_POST['pageNumber'])) ? $_POST['pageNumber'] : 0;
+
+
+	header("Content-Type: text/html");
+
+	$args = array(
+		'post_type' => 'company',
+		'posts_per_page' => $ppp,
+		'paged' => $page,
+		'tax_query' => array(
+			array(
+				'taxonomy' => 'equipment',
+				'field' => 'term_id',
+				'terms' => $term_ids,
+				'operator' => 'IN',
+			),
+		),
+	);
+
+	$loop = new WP_Query($args);
+
+	$out = '';
+
+	if ($loop->have_posts()) : while ($loop->have_posts()) : $loop->the_post();
+		$post_id = get_the_ID();
+		$payment_status = get_post_meta($post_id, 'payment_status', true);
+		?>
+		<div class="stm_company_item">
+			<a href="<?php echo get_the_permalink(); ?>">
+				<?php
+				if ($payment_status === 'paid') {
+					echo get_the_post_thumbnail();
+				} else {
+					?>
+					<img src="" alt="">
+					<?php
+				}
+				?>
+				<div class="stm_company_description">
+					<?php echo get_the_title() ?>
+				</div>
+			</a>
+		</div>
+	<?php
+
+	endwhile;
+	endif;
+	wp_reset_postdata();
+	die($out);
+}
+
+add_action('wp_ajax_nopriv_more_company_posts', 'more_company_posts');
+add_action('wp_ajax_more_company_posts', 'more_company_posts');
+
+
+
+function check_company_authorization() {
+	if (is_single() && strpos($_SERVER['REQUEST_URI'], '/company/') !== false) {
+		if (!is_user_logged_in()) {
+			// Если пользователь не авторизован, перенаправьте его на страницу входа.
+			wp_redirect('/library/');
+			exit;
+		}
+	}
+}
+add_action('template_redirect', 'check_company_authorization');

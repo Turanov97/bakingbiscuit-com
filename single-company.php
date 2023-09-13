@@ -10,72 +10,83 @@ $stm_phone = get_post_meta(get_the_ID(), 'phone', true);
 $stm_email = get_post_meta(get_the_ID(), 'e-mail', true);
 $stm_website = get_post_meta(get_the_ID(), 'website', true);
 $payment_status = get_post_meta(get_the_ID(), 'payment_status', true);
-
-
+$companyPosts = get_post_meta(get_the_ID(), 'add_post_in_company', true);
+$referer = wp_get_referer();
 ?>
+<?php do_shortcode('[welcomeUserBanner]') ?>
 <div class="stm_content">
 	<?php while (have_posts()) :
 		the_post(); ?>
 		<?php if (!empty($payment_status) && $payment_status === 'paid') { ?>
-        <div class="logo">
-			<?php echo get_the_post_thumbnail() ?>
-        </div>
-	    <?php } ?>
-        <div class="stm_single_company">
-            <div class="stm_single_company_bio">
+		<div class="top_content_baking">
+			<a href="<?php echo $referer?>">Back to Overview</a>
+			<div class="logo">
+				<?php echo get_the_post_thumbnail() ?>
+			</div>
+		</div>
+	<?php } ?>
+		<div class="stm_single_company">
+			<div class="stm_single_company_bio">
 				<?php if (!empty($stm_title)) { ?>
-                    <div class="stm_single_title">
+					<div class="stm_single_title">
 						<?php echo $stm_title; ?>
-                    </div>
+					</div>
 				<?php } ?>
 				<?php if (!empty($stm_street)) { ?>
-                    <div class="stm_single_street">
+					<div class="stm_single_street">
 						<?php echo $stm_street; ?>
-                    </div>
+					</div>
 				<?php } ?>
 				<?php if (!empty($stm_postal_code)) { ?>
-                    <div class="stm_single_postal_code">
-						<?php echo $stm_postal_code . $stm_city ?>
-                    </div>
+					<div class="stm_single_postal_code">
+						<?php echo $stm_postal_code . ' ' . $stm_city ?>
+					</div>
 				<?php } ?>
 
 				<?php
 				if (!empty($payment_status) && $payment_status === 'paid') {
 					if (!empty($stm_phone)) { ?>
-                        <div class="stm_single_phone">
-							<?php echo 'Telefon:' . $stm_phone; ?>
-                        </div>
+						<div class="stm_single_phone">
+							<?php echo 'Phone: ' . $stm_phone; ?>
+						</div>
 					<?php } ?>
 					<?php if (!empty($stm_email)) { ?>
-                        <div class="stm_single_email">
-							<?php echo 'E-Mail:' . $stm_email; ?>
-                        </div>
+						<div class="stm_single_email">
+							<?php echo 'E-Mail: ' . $stm_email; ?>
+						</div>
 					<?php } ?>
 					<?php if (!empty($stm_website)) { ?>
-                        <div class="stm_single_url">
-							<?php echo $stm_website; ?>
-                        </div>
+						<div class="stm_single_url">
+							<?php
+							// Убираем "https://"
+							$stm_website = str_replace("https://", "", $stm_website);
+							// Убираем завершающий слэш "/"
+							$stm_website = rtrim($stm_website, "/");
+							echo $stm_website; ?>
+						</div>
 					<?php }
 				} ?>
 
-            </div>
-          <div>
-			  <div class="stm_single_company_posts">
-				  <?php load_template(get_stylesheet_directory() . '/parts/loop_posts.php'); ?>
+			</div>
+			<div>
+				<div class="stm_single_company_posts">
+					<?php load_template(get_stylesheet_directory() . '/parts/loop_posts.php'); ?>
 
-			  </div>
-
-			  <div id="more_posts" class="btn btn-dark more_posts">
-				  <span class="btn_span_ajax" data-id="<?php echo get_the_ID();?>">Load More</span>
-				  <div class="lds-ellipsis">
-					  <div></div>
-					  <div></div>
-					  <div></div>
-					  <div></div>
-				  </div>
-			  </div>
-		  </div>
-        </div>
+				</div>
+				<div class="single_message"></div>
+				<?php if ($companyPosts) { ?>
+					<div id="more_posts" class="btn btn-dark more_posts">
+						<span class="btn_span_ajax" data-id="<?php echo get_the_ID(); ?>">Load More</span>
+						<div class="lds-ellipsis">
+							<div></div>
+							<div></div>
+							<div></div>
+							<div></div>
+						</div>
+					</div>
+				<?php } ?>
+			</div>
+		</div>
 	<?php endwhile; ?>
 </div>
 

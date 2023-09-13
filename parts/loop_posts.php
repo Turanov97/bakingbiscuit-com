@@ -5,7 +5,7 @@ $companyPosts = get_post_meta(get_the_ID(), 'add_post_in_company', true);
 $args = array(
 	'post_type' => 'post',
 	'post__in' => $companyPosts,
-	'posts_per_page' => 5,
+	'posts_per_page' => 15,
 );
 if (!empty($companyPosts)) {
 // The Query

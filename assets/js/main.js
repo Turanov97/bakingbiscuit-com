@@ -17,25 +17,28 @@ jQuery(document).ready(function ($) {
         preloader.removeClass('active');
         // Если есть результаты поиска
         if (response !== "undefined") {
+          console.log(response)
           // Выводим результаты
           $('.search-results').html(response?.html);
           $('#baki_pagination').html('')
+          $('.load_company_btn').show();
 
-          $('#baki_pagination').append(`<a href="#">&laquo;</a>`);
+          // $('#baki_pagination').append(`<a href="#">&laquo;</a>`);
           response?.letters.forEach((item) => {
+            $('.welcome_stm_user--filter').show();
             $('#baki_pagination').append(`<a id="baki_pagination_ss" href="#">${item}</a>`);
           });
-          $('#baki_pagination').append(`<a href="#">&raquo;</a>`);
+          // $('#baki_pagination').append(`<a href="#">&raquo;</a>`);
 
           handleAjaxSuccess();
 
         } else {
+
           $('.search-results').html('Ничего не найдено');
         }
       }
     });
   });
-
 
 
   // Функция для сортировки элементов
@@ -52,6 +55,13 @@ jQuery(document).ready(function ($) {
     });
   }
 
+  function resetFilter() {
+    const companyItems = document.querySelectorAll(".stm_company_item");
+    companyItems.forEach((item) => {
+      item.style.display = "block";
+    });
+  }
+
 // Функция для назначения обработчика события клика на пагинации
   function setupPaginationClickHandler() {
     const paginationLinks = document.querySelectorAll("#baki_pagination a");
@@ -60,19 +70,27 @@ jQuery(document).ready(function ($) {
       link.addEventListener("click", (e) => {
         e.preventDefault();
 
-        // Очищаем классы "active" у всех ссылок пагинации
-        paginationLinks.forEach((pLink) => {
-          pLink.classList.remove("active");
-        });
+        // Проверяем, был ли клик по уже активной ссылке пагинации
+        if (!link.classList.contains("active")) {
+          // Очищаем классы "active" у всех ссылок пагинации
+          paginationLinks.forEach((pLink) => {
+            pLink.classList.remove("active");
+          });
 
-        // Добавляем класс "active" только к выбранной ссылке пагинации
-        link.classList.add("active");
+          // Добавляем класс "active" только к выбранной ссылке пагинации
+          link.classList.add("active");
 
-        // Получаем букву, по которой нужно сортировать
-        const letter = link.textContent;
+          // Получаем букву, по которой нужно сортировать
+          const letter = link.textContent;
 
-        // Вызываем функцию для сортировки элементов
-        sortCompanyItems(letter);
+          // Вызываем функцию для сортировки элементов
+          sortCompanyItems(letter);
+        } else {
+          // Если клик был по уже активной ссылке, сбрасываем фильтрацию
+          resetFilter();
+          // Удаляем класс "active" у активной ссылки пагинации
+          link.classList.remove("active");
+        }
       });
     });
   }
@@ -84,20 +102,7 @@ jQuery(document).ready(function ($) {
   }
 
 
-// ...
-
-// После успешной загрузки и вставки пагинации, вызываем функцию handleAjaxSuccess
-// чтобы назначить обработчик кликов на пагинации
-
-
-
-
-
-
-
-
-
-  let ppp = 5; // Post per page
+  let ppp = 15; // Post per page
   let pageNumber = 1;
 
 
@@ -115,21 +120,24 @@ jQuery(document).ready(function ($) {
         var $data = $(data);
         if ($data.length) {
           $(".stm_single_company_posts").append($data);
-          $("#more_posts").attr("disabled", false);
+          $(".btn_span_ajax").attr("disabled", false);
         } else {
-          $("#more_posts").attr("disabled", true);
+          $(".btn_span_ajax").attr("disabled", true);
+          $(".single_message").text('No more posts');
+          $(".single_message").show();
+          $(".btn_span_ajax").hide();
         }
         if ($data.length === 0) {
-          $("#more_posts").addClass('false');
+          $(".btn_span_ajax").addClass('false');
         }
       },
       beforeSend: function () {
-        $('.lds-ellipsis').show();
-        $('.btn_span_ajax').hide();
+        $('.lds-ellipsis').addClass('active');
+        // $('.btn_span_ajax').hide();
       },
       complete: function () {
-        $('.lds-ellipsis').hide();
-        $('.btn_span_ajax').show();
+        $('.lds-ellipsis').removeClass('active');
+        // $('.btn_span_ajax').show();
       },
       error: function (jqXHR, textStatus, errorThrown) {
         $loader.html(jqXHR + " :: " + textStatus + " :: " + errorThrown);
@@ -140,12 +148,62 @@ jQuery(document).ready(function ($) {
   }
 
 
-  $("#more_posts").on("click", function () { // When btn is pressed.
-    $("#more_posts").attr("disabled", true); // Disable the button, temp.
+  $(".btn_span_ajax").on("click", function () { // When btn is pressed.
+    $(".btn_span_ajax").attr("disabled", true); // Disable the button, temp.
     load_posts();
+  });
 
+
+  let aaa = 15; // Post per page
+  let pageNumberAAA = 1;
+
+  function load_company() {
+    pageNumberAAA++;
+    let str = '&pageNumber=' + pageNumberAAA + '&ppp=' + aaa + '&action=more_company_posts';
+    $.ajax({
+      type: "POST",
+      dataType: "html",
+      url: ajaxurl,
+      data: str,
+      success: function (data) {
+        var $data = $(data);
+        if ($data.length) {
+
+          $(".stm_companys").append($data);
+          $(".load_company_btn").attr("disabled", false);
+        } else {
+          $(".load_company_btn").attr("disabled", true);
+          $(".single_message").text('No more company for this request');
+          $(".single_message").show();
+          $(".load_company_btn").hide();
+        }
+        if ($data.length === 0) {
+          $(".load_company_btn").addClass('false');
+        }
+      },
+      beforeSend: function () {
+        $('.lds-ellipsis').addClass('active');
+        // $('.btn_span_ajax').hide();
+      },
+      complete: function () {
+        $('.lds-ellipsis').removeClass('active');
+        // $('.btn_span_ajax').show();
+      },
+      error: function (jqXHR, textStatus, errorThrown) {
+        $loader.html(jqXHR + " :: " + textStatus + " :: " + errorThrown);
+      }
+
+    });
+    return false;
+  }
+
+
+  $(".load_company_btn").on("click", function () { // When btn is pressed.
+    $(".load_company_btn").attr("disabled", true); // Disable the button, temp.
+    load_company();
   });
 
 });
+
 
 
